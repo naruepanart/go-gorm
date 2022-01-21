@@ -3,7 +3,7 @@ GET http://localhost:3000/api/roles
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/api/role/2
+GET http://localhost:3000/api/role/1
 Content-Type: application/json
 
 ###
@@ -11,16 +11,18 @@ POST http://localhost:3000/api/role
 Content-Type: application/json
 
 {
-    "name":"role_name2"
+    "name":"role_name_22222222",
+    "permissions": ["1","2"]
 }
 
 
 ###
-PATCH http://localhost:3000/api/role/1
+PATCH http://localhost:3000/api/role/2
 Content-Type: application/json
 
 {
-    "name":"name222222222222222"
+    "name":"role_name_edit",
+    "permissions": ["1"]
 }
 
 ###

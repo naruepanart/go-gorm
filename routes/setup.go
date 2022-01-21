@@ -13,4 +13,7 @@ func SetupRoutes(router fiber.Router) {
 	api.Post("role", controllers.CreateRole)
 	api.Patch("role/:id", controllers.UpdateRole)
 	api.Delete("role/:id", controllers.DeleteRole)
+
+	api.Get("permissions", controllers.GetAllPermission)
+	api.Post("permission", controllers.CreatePermission)
 }

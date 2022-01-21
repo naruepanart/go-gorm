@@ -1,0 +1,28 @@
+###
+GET http://localhost:3000/api/permissions
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/permission/2
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/permission
+Content-Type: application/json
+
+{
+    "name":"p-5"
+}
+
+
+###
+PATCH http://localhost:3000/api/permission/1
+Content-Type: application/json
+
+{
+    "name":"name222222222222222"
+}
+
+###
+DELETE http://localhost:3000/api/permission/3
+Content-Type: application/json

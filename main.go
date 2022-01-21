@@ -16,9 +16,9 @@ func main() {
 
 	database.ConnectDatabaseSQL()
 	// database.ConDB.Migrator().DropColumn(&User{}, "product_id")
-	// database.ConDB.Migrator().DropTable(&Product{}, &User{})
+	//database.ConDB.Migrator().DropTable(&model.Role{}, &model.Permission{})
 
-	database.ConDB.AutoMigrate(&model.Role{})
+	database.ConDB.AutoMigrate(&model.Role{}, &model.Permission{})
 
 	// Users
 	//CreateUsers("A01")
