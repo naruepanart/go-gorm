@@ -1,63 +1,68 @@
 package main
 
 import (
-	"time"
+	"fmt"
 
 	"github.com/naruepanart/gorm/database"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type User struct {
-	ID        string `gorm:"primaryKey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
-	Name      string
+	gorm.Model
+	Name    string
+	Product []Product
 }
 
 type Product struct {
 	gorm.Model
 	Title  string
-	UserId string
+	UserId int
 	User   User `gorm:"foreignKey:UserId"`
 }
 
 func main() {
 	database.ConnectDatabaseSQL()
 	// database.ConDB.Migrator().DropColumn(&User{}, "product_id")
-	database.ConDB.Migrator().DropTable(&Product{}, &User{})
+	// database.ConDB.Migrator().DropTable(&Product{}, &User{})
 
 	database.ConDB.AutoMigrate(&Product{}, &User{})
 
 	// Users
-	CreateUsers("Name-01", "123123")
+	//CreateUsers("A01")
 
 	// Product
-	CreateProduct("Product-01", "123123")
+	//CreateProduct("P03", 1)
 	//GetAllProduct()
 	//GetProduct(1)
-	//GetProductByTitle("P02")
+	GetProductByTitle("P02")
 	//UpdateProduct(2, "n2")
 	//DeleteProduct(1)
 	//DeleteProductByTitle("n2")
 }
 
-func CreateUsers(name string, id string) {
+func CreateUsers(name string) {
 	user := User{}
 	user.Name = name
-	user.ID = id
-	database.ConDB.Create(&user)
+
+	tx := database.ConDB.Create(&user)
+	if tx.Error != nil {
+		fmt.Println(tx.Error)
+	}
 }
 
-func CreateProduct(title string, id string) {
+func CreateProduct(title string, userid int) {
 	product := Product{}
 	product.Title = title
-	product.UserId = id
+	product.UserId = userid
 
-	database.ConDB.Create(&product)
+	tx := database.ConDB.Create(&product)
+	if tx.Error != nil {
+		fmt.Println(tx.Error)
+	}
 }
 
-/* func GetAllProduct() {
+func GetAllProduct() {
 	product := []Product{}
 
 	tx := database.ConDB.Preload(clause.Associations).Find(&product)
@@ -66,12 +71,12 @@ func CreateProduct(title string, id string) {
 	}
 
 	for _, t := range product {
-		fmt.Printf("%v|%v|%v\n", t.ID, t.Userkey, t.User)
+		fmt.Printf("%v|%v|%v\n", t.ID, t.UserId, t.User)
 	}
 
-} */
+	/* fmt.Println(product) */
+}
 
-/*
 func GetProduct(id int) {
 	product := Product{}
 
@@ -120,4 +125,3 @@ func DeleteProductByTitle(title string) {
 	database.ConDB.Where("title = ?", title).Delete(&product)
 	fmt.Println(product)
 }
-*/
